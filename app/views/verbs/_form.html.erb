@@ -1,0 +1,13 @@
+<%= form_for(@verb) do |f| %>
+  <div class="field">
+    <%= f.label :infinitive %>
+    <%= f.text_field :infinitive %>
+  </div>
+  <div class="field">
+    <%= f.label :group %>
+    <%= f.select(:group, options_for_select([['I', 1], ['II', 2], ['III', 3]])) %>
+  </div>
+  <div class="field">
+    <%= f.submit("Add") %>
+  </div>
+<% end %>
