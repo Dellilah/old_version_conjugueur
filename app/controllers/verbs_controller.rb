@@ -1,7 +1,7 @@
 class VerbsController < ApplicationController
 
   def index
-    @verbs = Verb.all
+    @verbs = Verb.all.order('infinitive')
   end
 
   def new

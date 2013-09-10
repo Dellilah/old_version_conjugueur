@@ -15,16 +15,16 @@
 
   	<title><%= content_for?(:title) ? yield(:title) : "Conjugeur" %></title>
 
-  	<%= stylesheet_link_tag    "application" %>
-  	<%= javascript_include_tag "vendor/custom.modernizr" %>
+  	<%= stylesheet_link_tag "foundation_and_overrides" %>
+
+    <%= javascript_include_tag "vendor/custom.modernizr" %>
     <%= csrf_meta_tags %>
   </head>
 
   <body>
 
     <%= yield %>
-
-
     <%= javascript_include_tag "application" %>
+    <%= stylesheet_link_tag "verbs" %>
   </body>
 </html>
