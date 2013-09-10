@@ -5,14 +5,48 @@ class VerbsController < ApplicationController
 
   def new
     @verb = Verb.new
-    @times = ['present', 'imparfait', 'passe_compose', 'passe_simple', 'plus_que_parfait', 'futur_simple', 'subjonctif']
+    @times = ['Present', 'Imparfait', 'PasseCompose', 'PasseSimple', 'PlusQueParfait', 'FuturSimple', 'Subjonctif']
   end
 
   def create
+    @tenses = Hash.new
     @verb = Verb.new(params.permit(:infinitive, :group))
     respond_to do |format|
       if @verb.save
-        @params = @verb.id
+
+        params.each do |index, el|
+          name = index.split("__");
+          if name.length > 1
+            if @tenses[name[0]]
+              @tenses[name[0]][name[1]] = el
+              @tenses[name[0]]['verb_id'] = @verb.id
+            else
+              @tenses[name[0]] = {name[1] => el}
+            end
+          end
+        end
+
+        # Nie działa String => Object?
+        # @tenses.each do |key, value|
+        #   a = key.new(value)
+        #   a.save
+        # end
+
+        tense = Present.new(@tenses['Present'])
+        tense.save
+        tense = Imparfait.new(@tenses['Imparfait'])
+        tense.save
+        tense = PasseCompose.new(@tenses['PasseCompose'])
+        tense.save
+        tense = PasseSimple.new(@tenses['PasseSimple'])
+        tense.save
+        tense = PlusQueParfait.new(@tenses['PlusQueParfait'])
+        tense.save
+        tense = FuturSimple.new(@tenses['FuturSimple'])
+        tense.save
+        tense = Subjonctif.new(@tenses['Subjonctif'])
+        tense.save
+
         format.html
         format.json{render action: 'show', status: :created, location: @verb}
       else

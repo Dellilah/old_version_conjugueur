@@ -17,13 +17,13 @@
       <div class="row">
     <% end %>
         <div class="large-4 columns">
-            <h3><%= time.capitalize %></h3>
-              <%= label_tag :je %><% name = time + "_je" %> <%= text_field_tag name %>
-              <%= label_tag :tu %> <% name = time + "_tu" %> <%= text_field_tag name %>
-              <%= label_tag :il_elle %> <% name = time + "_il" %> <%= text_field_tag name %>
-              <%= label_tag :nous %> <% name = time + "_nous" %> <%= text_field_tag name %>
-              <%= label_tag :vous %> <% name = time + "_vous" %> <%= text_field_tag name %>
-              <%= label_tag :ils %> <% name = time + "_ils" %> <%= text_field_tag name %>
+            <h3><%= time %></h3>
+              <%= label_tag :je %><% name = time + "__je" %> <%= text_field_tag name %>
+              <%= label_tag :tu %> <% name = time + "__tu" %> <%= text_field_tag name %>
+              <%= label_tag :il_elle %> <% name = time + "__il" %> <%= text_field_tag name %>
+              <%= label_tag :nous %> <% name = time + "__nous" %> <%= text_field_tag name %>
+              <%= label_tag :vous %> <% name = time + "__vous" %> <%= text_field_tag name %>
+              <%= label_tag :ils %> <% name = time + "__ils" %> <%= text_field_tag name %>
         </div>
       <% if (index%3) == 2 %>
         </div>
