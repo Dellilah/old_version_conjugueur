@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  je: MyString
+  tu: MyString
+  il: MyString
+  nous: MyString
+  vous: MyString
+  ils: MyString
+  verb_id: 1
+
+two:
+  je: MyString
+  tu: MyString
+  il: MyString
+  nous: MyString
+  vous: MyString
+  ils: MyString
+  verb_id: 1
