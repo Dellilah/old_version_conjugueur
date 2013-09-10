@@ -44,4 +44,9 @@ end
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+# Add foreign keys
 gem "foreigner", "~> 1.5.0"
+
+#Zurb Foundation
+gem 'compass-rails' # you need this or you get an err
+gem 'zurb-foundation', '~> 4.0.0'

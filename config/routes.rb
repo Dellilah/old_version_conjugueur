@@ -1,5 +1,6 @@
 Conjugeur::Application.routes.draw do
   resources :verbs
+  post '/create' => 'verbs#create'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
