@@ -1,4 +1,7 @@
 class VerbsController < ApplicationController
+  before_action :set_verb, only: [:show, :edit, :update]
+  before_action :set_tenses, only: [:show, :edit, :update, :new, :create]
+  ActionController::Parameters.permit_all_parameters = true
 
   def index
     @verbs = Verb.all.order('infinitive')
@@ -6,18 +9,12 @@ class VerbsController < ApplicationController
 
   def new
     @verb = Verb.new
-    @times = ['Present', 'Imparfait', 'PasseCompose', 'PasseSimple', 'PlusQueParfait', 'FuturSimple', 'Subjonctif']
+  end
+
+  def edit
   end
 
   def show
-    @verb = Verb.find(params[:id])
-    @present = @verb.present
-    @imparfait = @verb.imparfait
-    @passe_compose = @verb.passe_compose
-    @passe_simple = @verb.passe_simple
-    @plus_que_parfait = @verb.plus_que_parfait
-    @futur_simple = @verb.futur_simple
-    @subjonctif= @verb.subjonctif
   end
 
   def create
@@ -67,5 +64,28 @@ class VerbsController < ApplicationController
       end
     end
   end
+
+  def update
+    respond_to do |format|
+      if @verb.update(params['verb'])
+        format.html { redirect_to @verb, notice: 'Verb was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: 'edit' }
+        format.json { render json: @verb.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  private
+
+    def set_verb
+      @verb = Verb.find(params[:id])
+    end
+
+    def set_tenses
+      @tenses = [:present, :imparfait, :passe_compose, :passe_simple, :plus_que_parfait, :futur_simple, :subjonctif]
+      @forms = [:je, :tu, :il, :nous, :vous, :ils]
+    end
 
 end

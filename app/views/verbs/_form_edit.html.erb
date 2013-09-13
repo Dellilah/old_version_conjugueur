@@ -1,0 +1,30 @@
+<%= form_for(@verb) do |f| %>
+  <div class="row">
+    <div class="large-2 columns">
+      <%= f.label :group %>
+      <%= f.select :group, [['I', 1], ['II', 2], ['III', 3]] %>
+    </div>
+  </div>
+
+  <% @tenses.each_with_index do |tense, index| %>
+    <% if (index%3) == 0 %>
+      <div class="row">
+    <% end %>
+      <div class="large-4 columns">
+        <h3><%= tense.to_s.capitalize.gsub(/[_]/, ' ')%></h3>
+        <%= f.fields_for tense do |pr| %>
+          <% @forms.each do |form| %>
+            <%= pr.label form %>
+            <%= pr.text_field form %>
+          <% end %>
+        <% end %>
+      </div>
+    <% if (index%3) == 2 %>
+      </div>
+    <% end %>
+  <% end %>
+
+
+  <%= f.submit %>
+
+<% end %>
