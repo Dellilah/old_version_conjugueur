@@ -1,71 +1,18 @@
 <div class="row"><h1>Conjugation: <%= @verb.infinitive %></h1></div>
 
-<div class="row">
-  <div class="large-4 columns">
-    <h3>Present</h3>
-    <b>Je </b><%= @present.je %><br/>
-    <b>Tu </b><%= @present.tu %><br/>
-    <b>Il/elle </b><%= @present.il %><br/>
-    <b>Nous </b><%= @present.nous %><br/>
-    <b>Vous </b><%= @present.vous %><br/>
-    <b>Ils/elles </b><%= @present.ils %><br/>
-  </div>
-  <div class="large-4 columns">
-    <h3>Imparfait</h3>
-    <b>Je </b><%= @imparfait.je %><br/>
-    <b>Tu </b><%= @imparfait.tu %><br/>
-    <b>Il/elle </b><%= @imparfait.il %><br/>
-    <b>Nous </b><%= @imparfait.nous %><br/>
-    <b>Vous </b><%= @imparfait.vous %><br/>
-    <b>Ils/elles </b><%= @imparfait.ils %><br/>
-  </div>
-  <div class="large-4 columns">
-    <h3>Passé Composé</h3>
-    <b>Je </b><%= @passe_compose.je %><br/>
-    <b>Tu </b><%= @passe_compose.tu %><br/>
-    <b>Il/elle </b><%= @passe_compose.il %><br/>
-    <b>Nous </b><%= @passe_compose.nous %><br/>
-    <b>Vous </b><%= @passe_compose.vous %><br/>
-    <b>Ils/elles </b><%= @passe_compose.ils %><br/>
-  </div>
-</div>
-<div class="row">
-  <div class="large-4 columns">
-    <h3>Passé Simple</h3>
-    <b>Je </b><%= @passe_simple.je %><br/>
-    <b>Tu </b><%= @passe_simple.tu %><br/>
-    <b>Il/elle </b><%= @passe_simple.il %><br/>
-    <b>Nous </b><%= @passe_simple.nous %><br/>
-    <b>Vous </b><%= @passe_simple.vous %><br/>
-    <b>Ils/elles </b><%= @passe_simple.ils %><br/>
-  </div>
-  <div class="large-4 columns">
-    <h3>Plus-que-parfait</h3>
-    <b>Je </b><%= @plus_que_parfait.je %><br/>
-    <b>Tu </b><%= @plus_que_parfait.tu %><br/>
-    <b>Il/elle </b><%= @plus_que_parfait.il %><br/>
-    <b>Nous </b><%= @plus_que_parfait.nous %><br/>
-    <b>Vous </b><%= @plus_que_parfait.vous %><br/>
-    <b>Ils/elles </b><%= @plus_que_parfait.ils %><br/>
-  </div>
-  <div class="large-4 columns">
-    <h3>Futur Simple</h3>
-    <b>Je </b><%= @futur_simple.je %><br/>
-    <b>Tu </b><%= @futur_simple.tu %><br/>
-    <b>Il/elle </b><%= @futur_simple.il %><br/>
-    <b>Nous </b><%= @futur_simple.nous %><br/>
-    <b>Vous </b><%= @futur_simple.vous %><br/>
-    <b>Ils/elles </b><%= @futur_simple.ils %><br/>
-  </div>
-</div>
-<div class="row">
-  <div class="large-4 columns">
-    <h3>Subjonctif</h3>
-    <b>Je </b><%= @subjonctif.je %><br/>
-    <b>Tu </b><%= @subjonctif.tu %><br/>
-    <b>Il/elle </b><%= @subjonctif.il %><br/>
-    <b>Nous </b><%= @subjonctif.nous %><br/>
-    <b>Vous </b><%= @subjonctif.vous %><br/>
-    <b>Ils/elles </b><%= @subjonctif.ils %><br/>
-  </div>
-</div>
+
+  <% @tenses.each_with_index do |tense, index| %>
+    <% if (index%3) == 0 %>
+      <div class="row">
+    <% end %>
+    <div class="large-4 columns">
+      <h3><%= tense.to_s.capitalize %></h3>
+      <% @forms.each do |form| %>
+        <b><%= form.to_s.capitalize %> </b><%= @verb.send(tense).send(form) %><br/>
+      <% end %>
+    </div>
+
+    <% if (index%3) == 2 %>
+        </div>
+    <% end %>
+  <% end %>

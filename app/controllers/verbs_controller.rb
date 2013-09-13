@@ -18,7 +18,7 @@ class VerbsController < ApplicationController
   end
 
   def create
-    @tenses = Hash.new
+    @tenses_form = Hash.new
     @verb = Verb.new(params.permit(:infinitive, :group))
     respond_to do |format|
       if @verb.save
@@ -26,35 +26,19 @@ class VerbsController < ApplicationController
         params.each do |index, el|
           name = index.split("__");
           if name.length > 1
-            if @tenses[name[0]]
-              @tenses[name[0]][name[1]] = el
-              @tenses[name[0]]['verb_id'] = @verb.id
+            if @tenses_form[name[0]]
+              @tenses_form[name[0]][name[1]] = el
+              @tenses_form[name[0]]['verb_id'] = @verb.id
             else
-              @tenses[name[0]] = {name[1] => el}
+              @tenses_form[name[0]] = {name[1] => el}
             end
           end
         end
 
-        # Nie działa String => Object?
-        # @tenses.each do |key, value|
-        #   a = key.new(value)
-        #   a.save
-        # end
-
-        tense = Present.new(@tenses['Present'])
-        tense.save
-        tense = Imparfait.new(@tenses['Imparfait'])
-        tense.save
-        tense = PasseCompose.new(@tenses['PasseCompose'])
-        tense.save
-        tense = PasseSimple.new(@tenses['PasseSimple'])
-        tense.save
-        tense = PlusQueParfait.new(@tenses['PlusQueParfait'])
-        tense.save
-        tense = FuturSimple.new(@tenses['FuturSimple'])
-        tense.save
-        tense = Subjonctif.new(@tenses['Subjonctif'])
-        tense.save
+        @tenses_form.each do |key, value|
+          a = Module.const_get(key).new(value)
+          a.save
+        end
 
         format.html{redirect_to @verb, notice: 'Verb added'}
         format.json{render action: 'show', status: :created, location: @verb}
@@ -84,6 +68,7 @@ class VerbsController < ApplicationController
     end
 
     def set_tenses
+      @tenses_new = [:Present, :Imparfait, :PasseCompose, :PasseSimple, :PlusQueParfait, :FuturSimple, :Subjonctif]
       @tenses = [:present, :imparfait, :passe_compose, :passe_simple, :plus_que_parfait, :futur_simple, :subjonctif]
       @forms = [:je, :tu, :il, :nous, :vous, :ils]
     end
