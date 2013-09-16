@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130910081115) do
+ActiveRecord::Schema.define(version: 20130916093051) do
 
   create_table "futur_simples", force: true do |t|
     t.string   "je"
@@ -102,6 +102,7 @@ ActiveRecord::Schema.define(version: 20130910081115) do
     t.integer  "group"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "translation"
   end
 
 end

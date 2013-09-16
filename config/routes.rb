@@ -2,6 +2,7 @@ Conjugeur::Application.routes.draw do
   root :to => 'verbs#index'
   resources :verbs
   post '/create' => 'verbs#create'
+  get '/download' => 'verbs#download'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

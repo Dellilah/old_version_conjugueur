@@ -50,3 +50,6 @@ gem "foreigner", "~> 1.5.0"
 #Zurb Foundation
 gem 'compass-rails' # you need this or you get an err
 gem 'zurb-foundation', '~> 4.0.0'
+
+#nokogiri - reading html
+gem "nokogiri", "~> 1.6.0"

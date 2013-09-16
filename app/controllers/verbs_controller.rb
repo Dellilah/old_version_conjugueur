@@ -50,6 +50,7 @@ class VerbsController < ApplicationController
   end
 
   def update
+    puts params['verb']
     respond_to do |format|
       if @verb.update(params['verb'])
         format.html { redirect_to @verb, notice: 'Verb was successfully updated.' }
@@ -58,6 +59,15 @@ class VerbsController < ApplicationController
         format.html { render action: 'edit' }
         format.json { render json: @verb.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def download
+    verbs = download_conjugation()
+    puts verbs
+    respond_to do |format|
+      format.html{ render action: 'index'}
+      format.json { head :no_content }
     end
   end
 

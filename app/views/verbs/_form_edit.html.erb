@@ -1,5 +1,9 @@
 <%= form_for(@verb) do |f| %>
   <div class="row">
+    <div class="large-4 columns">
+      <%= f.label :translation %>
+      <%= f.text_field :translation %>
+    </div>
     <div class="large-2 columns">
       <%= f.label :group %>
       <%= f.select :group, [['I', 1], ['II', 2], ['III', 3]] %>

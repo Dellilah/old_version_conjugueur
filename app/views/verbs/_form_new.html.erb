@@ -1,11 +1,19 @@
-<%= form_tag("/create", method: "post") do %>
-  <div class="row basic_verb">
-
-    <div class="large-6 columns">
+<%= form_for(@verb) do |f| %>
+  <div class="row">
+    <div class="large-2 columns">
+      <%= f.label :group %>
+      <%= f.select :group, [['I', 1], ['II', 2], ['III', 3]] %>
+    </div>
+  </div>
+    <div class="large-4 columns">
       <%= label_tag :infinitive %>
       <%= text_field_tag :infinitive %>
     </div>
-    <div class="large-6 columns">
+    <div class="large-4 columns">
+      <%= label_tag :translation %>
+      <%= text_field_tag :translation %>
+    </div>
+    <div class="large-4 columns">
       <%= label_tag :group %>
       <%= select_tag(:group, options_for_select([['I', 1], ['II', 2], ['III', 3]]), :class=>'select_group') %>
     </div>
