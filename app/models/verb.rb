@@ -7,6 +7,8 @@ class Verb < ActiveRecord::Base
   has_one :subjonctif, dependent: :destroy
   has_one :plus_que_parfait, dependent: :destroy
 
+  validates :infinitive, :uniqueness =>{:message => "This verb already exists"}
+
   accepts_nested_attributes_for :present
   accepts_nested_attributes_for :futur_simple
   accepts_nested_attributes_for :passe_compose

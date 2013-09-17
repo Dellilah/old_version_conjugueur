@@ -63,8 +63,15 @@ class VerbsController < ApplicationController
   end
 
   def download
-    verbs = download_conjugation()
-    puts verbs
+    a = download_conjugation()
+    @verbs_conj.each do |verb|
+      v = Verb.new(verb)
+      if v.save
+        puts "ok"
+      else
+        puts "fail"
+      end
+    end
     respond_to do |format|
       format.html{ render action: 'index'}
       format.json { head :no_content }

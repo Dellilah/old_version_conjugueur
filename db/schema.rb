@@ -102,7 +102,8 @@ ActiveRecord::Schema.define(version: 20130916093051) do
     t.integer  "group"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "translation"
   end
+
+  add_index "verbs", ["infinitive"], name: "index_verbs_on_infinitive", unique: true
 
 end

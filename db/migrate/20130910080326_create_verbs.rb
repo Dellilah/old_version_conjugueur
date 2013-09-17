@@ -6,5 +6,6 @@ class CreateVerbs < ActiveRecord::Migration
 
       t.timestamps
     end
+    add_index :verbs, :infinitive, :unique => true
   end
 end
