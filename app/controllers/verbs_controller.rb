@@ -19,7 +19,7 @@ class VerbsController < ApplicationController
 
   def create
     @tenses_form = Hash.new
-    @verb = Verb.new(params.permit(:infinitive, :group))
+    @verb = Verb.new(params.permit(:infinitive, :group, :translation))
     respond_to do |format|
       if @verb.save
 
@@ -71,6 +71,33 @@ class VerbsController < ApplicationController
     @verbs = Verb.all.order('infinitive')
     respond_to do |format|
       format.html{ render action: 'index'}
+      format.json { head :no_content }
+    end
+  end
+
+  def practice
+    verb_number = Random.new
+    # Choosing verbs from specific groupes
+    @verbs = Array.new
+    if params[:groupes]
+      @verbs = Verb.find_all_by_group(params[:groupes])
+    end
+    # Add verbs specified
+    if params[:verbs] && params[:verbs].gsub!(/\s+/, "") != ''
+      v = params[:verbs].split(',')
+      @verbs.concat Verb.find_all_by_infinitive(v)
+    end
+    # Exclude some specified verbs
+    if params[:exluded_verbs] && params[:exluded_verbs].gsub!(/\s+/, "") != ""
+      v = params[:exluded_verbs].split(",")
+      exluded = Verb.find_all_by_infinitive(v)
+      @verbs.delete_if {|x| exluded.include? x}
+    end
+
+    verb_number = verb_number.rand(@verbs.length)
+    @verb = @verbs[verb_number]
+    respond_to do |format|
+      format.html { redirect_to @verb}
       format.json { head :no_content }
     end
   end

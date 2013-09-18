@@ -23,7 +23,7 @@ module Download
     end
 
     verbs.each_with_index do |verb, i|
-      @verbs_conj[i] = Hash.
+      @verbs_conj[i] = Hash.new
       verb = verbs[((page.to_i - 1)*10)+i]
       @verbs_conj[i][:infinitive] = verb
       tenses.each do |key, tense|
