@@ -31,6 +31,10 @@ module Download
       v = verb.gsub(/[âäàéèêëîïôöûç]/, 'é' =>'e', 'è' =>'e', 'ë' =>'e', 'ê' =>'e','ä' => 'a','â' => 'a','à' => 'a',
         'ô' =>'o','ö' =>'o','û' =>'u','ç' =>'c', 'î' =>'i','ï' =>'i')
       url = "http://leconjugueur.lefigaro.fr/conjugaison/verbe/#{v}.html"
+      url_trans = "http://pl.pons.eu/francuski-polski/#{v}"
+      @translation = Nokogiri::HTML(open(url_trans))
+      @verbs_conj[i][:translation] = @translation.css('td.target a').children[0].text
+
       @conjugation = Nokogiri::HTML(open(url))
       groupe = @conjugation.css('td b').to_a
       groupe = groupe[1].children[0].text

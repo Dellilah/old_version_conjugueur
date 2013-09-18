@@ -100,6 +100,7 @@ ActiveRecord::Schema.define(version: 20130916093051) do
   create_table "verbs", force: true do |t|
     t.string   "infinitive"
     t.integer  "group"
+    t.string   "translation"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

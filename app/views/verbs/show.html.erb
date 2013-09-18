@@ -1,6 +1,9 @@
 <div class="row"><h1>Conjugation: <%= @verb.infinitive %></h1></div>
-
-
+<div class="row">
+  <h4>Polish translation:
+  <%= @verb.translation ? @verb.translation : "-" %>
+  </h4>
+</div>
   <% @tenses.each_with_index do |tense, index| %>
     <% if (index%3) == 0 %>
       <div class="row">
