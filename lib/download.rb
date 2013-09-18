@@ -1,10 +1,9 @@
 module Download
   require 'net/http'
 
-  def download_conjugation
+  def download_conjugation(page)
     verbs = Array.new
     @verbs_conj = Array.new
-    # tenses  = ['present', 'imparfait', 'passe_compose', 'passe_simple', 'plus_que_parfait', 'subjonctif', 'futur_simple']
     tenses = {present_attributes: 6, imparfait_attributes: 8, passe_compose_attributes: 7, passe_simple_attributes: 10, plus_que_parfait_attributes: 9, futur_simple_attributes: 12, subjonctif_attributes: 15}
     forms = {je: 3, tu: 6, il: 9, nous: 12, vous: 15, ils: 18}
     flag = 1
@@ -35,11 +34,15 @@ module Download
       @conjugation = Nokogiri::HTML(open(url))
       groupe = @conjugation.css('td b').to_a
       groupe = groupe[1].children[0].text
-      # a = case groupe
-      #   when "premier groupe" then 1
-      #   when "deuxième groupe" then 2
-      #   when "troisième groupe" then 3
-      # end
+
+      a = case groupe
+        when "premier groupe" then 1
+        when "deuxième groupe" then 2
+        when "troisième groupe" then 3
+      end
+
+      @verbs_conj[i][:group] = a
+
       t = @conjugation.css('td').to_a
       tenses.each do |key, tense|
         forms.each do |key2, form|
@@ -62,11 +65,10 @@ module Download
           @verbs_conj[i][key][key2] = temp
         end
       end
-      if i > 10
+      if i > page.to_i*10
         break
       end
     end
-  return "ala"
   end
 end
 

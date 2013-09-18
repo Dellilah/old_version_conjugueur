@@ -63,15 +63,12 @@ class VerbsController < ApplicationController
   end
 
   def download
-    a = download_conjugation()
+    a = download_conjugation(params[:page])
     @verbs_conj.each do |verb|
       v = Verb.new(verb)
-      if v.save
-        puts "ok"
-      else
-        puts "fail"
-      end
+      v.save
     end
+    @verbs = Verb.all.order('infinitive')
     respond_to do |format|
       format.html{ render action: 'index'}
       format.json { head :no_content }
