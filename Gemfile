@@ -63,3 +63,6 @@ gem "nokogiri", "~> 1.6.0"
 
 # Angular JS
 gem 'angularjs-rails'
+
+# heroku
+gem 'rails_12factor', group: :production
