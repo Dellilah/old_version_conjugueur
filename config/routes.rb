@@ -1,4 +1,10 @@
 Conjugeur::Application.routes.draw do
+  get "presents/new"
+  get "presents/create"
+  get "presents/update"
+  get "presents/index"
+  get "presents/edit"
+  get "presents/show"
   root :to => 'verbs#index'
   resources :verbs
   post '/create' => 'verbs#create'

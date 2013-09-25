@@ -1,14 +1,26 @@
 class VerbsController < ApplicationController
+  respond_to :json
   before_action :set_verb, only: [:show, :edit, :update]
-  before_action :set_tenses, only: [:show, :edit, :update, :new, :create]
+  before_action :set_tenses, only: [:show, :edit, :update, :new, :create, :practice]
   ActionController::Parameters.permit_all_parameters = true
 
   def index
     @verbs = Verb.all.order('infinitive')
+    respond_to do |format|
+      format.html
+      format.json {render json: @verbs}
+    end
   end
 
   def new
     @verb = Verb.new
+    @verb.present = Present.new
+    @verb.imparfait = Imparfait.new
+    @verb.passe_compose = PasseCompose.new
+    @verb.passe_simple = PasseSimple.new
+    @verb.plus_que_parfait = PlusQueParfait.new
+    @verb.futur_simple = FuturSimple.new
+    @verb.subjonctif = Subjonctif.new
   end
 
   def edit
@@ -18,28 +30,9 @@ class VerbsController < ApplicationController
   end
 
   def create
-    @tenses_form = Hash.new
-    @verb = Verb.new(params.permit(:infinitive, :group, :translation))
+    @verb = Verb.new(params['verb'])
     respond_to do |format|
       if @verb.save
-
-        params.each do |index, el|
-          name = index.split("__");
-          if name.length > 1
-            if @tenses_form[name[0]]
-              @tenses_form[name[0]][name[1]] = el
-              @tenses_form[name[0]]['verb_id'] = @verb.id
-            else
-              @tenses_form[name[0]] = {name[1] => el}
-            end
-          end
-        end
-
-        @tenses_form.each do |key, value|
-          a = Module.const_get(key).new(value)
-          a.save
-        end
-
         format.html{redirect_to @verb, notice: 'Verb added'}
         format.json{render action: 'show', status: :created, location: @verb}
       else
@@ -50,7 +43,6 @@ class VerbsController < ApplicationController
   end
 
   def update
-    puts params['verb']
     respond_to do |format|
       if @verb.update(params['verb'])
         format.html { redirect_to @verb, notice: 'Verb was successfully updated.' }
@@ -76,7 +68,8 @@ class VerbsController < ApplicationController
   end
 
   def practice
-    verb_number = Random.new
+    rnd = Random.new
+    @tenses_chosen = params[:tenses] if params[:tenses]
     # Choosing verbs from specific groupes
     @verbs = Array.new
     if params[:groupes]
@@ -94,11 +87,10 @@ class VerbsController < ApplicationController
       @verbs.delete_if {|x| exluded.include? x}
     end
 
-    verb_number = verb_number.rand(@verbs.length)
-    @verb = @verbs[verb_number]
-    respond_to do |format|
-      format.html { redirect_to @verb}
-      format.json { head :no_content }
+    if(@verbs.length)
+      @verb = @verbs[rnd.rand(@verbs.length)]
+      @form = @forms[rnd.rand(@forms.length)]
+      @tense = @tenses_chosen[rnd.rand(@tenses_chosen.length)]
     end
   end
 

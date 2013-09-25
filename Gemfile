@@ -53,3 +53,6 @@ gem 'zurb-foundation', '~> 4.0.0'
 
 #nokogiri - reading html
 gem "nokogiri", "~> 1.6.0"
+
+# Angular JS
+gem 'angularjs-rails'

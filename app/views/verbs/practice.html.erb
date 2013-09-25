@@ -1,0 +1,26 @@
+<div class="row"><h1>What is the form... </h1></div>
+<div ng-controller="PracticeCtrl">
+  <div class="row">
+     Verb: <span ng-model="infinitive"><%= @verb.infinitive %></span>
+    <span> Tense: <%= @tense %> </span>
+    <span> Form: <%= @form %> </span>
+
+    <form ng-submit="checkAnswer()">
+      <input type="hidden" ng-model="verb.infinitive" value="<%= @verb.infinitive %>">
+      <input type="hidden" ng-model="tense" value="<%= @tense %>">
+      <input type="hidden" ng-model="form" value="<%= @form %>">
+      <input type="text" ng-model="verb.answer">
+      <input type="submit" value="Check">
+  </form>
+  </div>
+  {{infinitive}}
+  <div class="row">
+    <ul>
+      <li ng-repeat="v in verbs">
+        {{v.infinitive}}({{v.tense}}, {{v.form}})<br/>
+        Your answer: {{v.answer}}<br/>
+        Correct answer: {{v.correct}}
+      </li>
+    </ul>
+  </div>
+</div>
