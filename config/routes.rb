@@ -9,7 +9,9 @@ Conjugeur::Application.routes.draw do
   resources :verbs
   post '/create' => 'verbs#create'
   get '/download/:page' => 'verbs#download'
-  post '/practice' => 'verbs#practice'
+  get '/practice' => 'verbs#practice'
+  get '/by_infinitive/:infinitive' => 'verbs#by_infinitive'
+  get '/by_group/:group' => 'verbs#by_group'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

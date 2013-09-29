@@ -1,27 +1,42 @@
-<div class="row"><h1>What is the form... </h1></div>
-<div ng-controller="PracticeCtrl">
-  <div class="row">
-     Verb: <span ng-model="infinitive"><%= @verb.infinitive %></span>
-    <span> Tense: <%= @tense %> </span>
-    <span> Form: <%= @form %> </span>
+<div class="row" ng-controller="PracticeCtrl">
+  <div id="practice_form">
+    <form ng-submit="set()">
+      <div class="row step">
+        <div id="error"></div>
+        <b>Step I: Choose tenses</b><br/>
+        <br>
+          <input type="checkbox" ng-model="tenses.present" checked> Present
+          <input type="checkbox" ng-model="tenses.imparfait" checked> Imparfait
+          <input type="checkbox" ng-model="tenses.passe_compose" checked> Passé Composé
+          <input type="checkbox" ng-model="tenses.passe_simple" checked> Passé Simple
+          <input type="checkbox" ng-model="tenses.plus_que_parfait" checked> Plus-que-parfait
+          <input type="checkbox" ng-model="tenses.futur_simple" checked> Futur Simple
+          <input type="checkbox" ng-model="tenses.subjonctif" checked>  Subjonctif <br/>
+      </div>
+      <br/>
+      <div class="row step">
+        <b>Step II: Choose groupes</b><br/>
+        <br>
+        <input type="checkbox" ng-model="groups.1" checked> I
+        <input type="checkbox" ng-model="groups.2" checked> II
+        <input type="checkbox" ng-model="groups.3" checked> III <br/>
+        <br/>
+        <b>...or specifie verbs</b><br>
+         <input type="text" ng-model="verbs" placeholder="être, aller, venir"> <br/>
+        <b>...or exlude verbs </b><br>
+         <input type="text" ng-model="excluded_verbs" placeholder="être, aller, venir"> <br/>
+      </div>
+      <input type="submit" value="Try me!">
 
-    <%= form_tag do %>
-      <%= text_field_tag(:answer,  '', :'ng-model' => 'verb.answer' )%>
-      <%= hidden_field_tag(:infinitive, @verb.infinitive)%>
-      <%= hidden_field_tag(:tense, @tense)%>
-      <%= hidden_field_tag(:form, @form)%>
-
-      <%= submit_tag("Check!", :'ng-click' => 'checkAnswer(infinitive, $event)' ) %>
-    <% end %>
+      <!-- {{t}} -->
+      <p ng-repeat="v in verbs_db">
+        {{v.id}}
+      </p>
   </div>
-  <!-- {{infinitive}}
-  <div class="row">
-    <ul>
-      <li ng-repeat="v in verbs">
-        {{v.infinitive}}({{v.tense}}, {{v.form}})<br/>
-        Your answer: {{v.answer}}<br/>
-        Correct answer: {{v.correct}}
-      </li>
-    </ul>
-  </div> -->
+
+  <div class="row" id="answer_form">
+
+  </div>
 </div>
+
+

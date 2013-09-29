@@ -1,13 +1,28 @@
 class VerbsController < ApplicationController
   respond_to :json
   before_action :set_verb, only: [:show, :edit, :update]
-  before_action :set_tenses, only: [:show, :edit, :update, :new, :create, :practice]
+  before_action :set_tenses, only: [:show, :edit, :update, :new, :create, :practice, :by_infinitive]
   ActionController::Parameters.permit_all_parameters = true
 
   def index
     @verbs = Verb.all.order('infinitive')
     respond_to do |format|
       format.html
+      format.json {render json: @verbs}
+    end
+  end
+
+  def by_infinitive
+    @verb = Verb.where(infinitive: params['infinitive']).take
+    respond_to do |format|
+      format.html {render action: 'show', location: @verb}
+      format.json {render json: @verb}
+    end
+  end
+
+  def by_group
+    @verbs = Verb.where(group: params['group'])
+    respond_to do |format|
       format.json {render json: @verbs}
     end
   end
@@ -68,30 +83,6 @@ class VerbsController < ApplicationController
   end
 
   def practice
-    rnd = Random.new
-    @tenses_chosen = params[:tenses] if params[:tenses]
-    # Choosing verbs from specific groupes
-    @verbs = Array.new
-    if params[:groupes]
-      @verbs = Verb.find_all_by_group(params[:groupes])
-    end
-    # Add verbs specified
-    if params[:verbs] && params[:verbs].gsub!(/\s+/, "") != ''
-      v = params[:verbs].split(',')
-      @verbs.concat Verb.find_all_by_infinitive(v)
-    end
-    # Exclude some specified verbs
-    if params[:exluded_verbs] && params[:exluded_verbs].gsub!(/\s+/, "") != ""
-      v = params[:exluded_verbs].split(",")
-      exluded = Verb.find_all_by_infinitive(v)
-      @verbs.delete_if {|x| exluded.include? x}
-    end
-
-    if(@verbs.length)
-      @verb = @verbs[rnd.rand(@verbs.length)]
-      @form = @forms[rnd.rand(@forms.length)]
-      @tense = @tenses_chosen[rnd.rand(@tenses_chosen.length)]
-    end
   end
 
   private
