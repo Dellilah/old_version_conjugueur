@@ -5,21 +5,21 @@
         <div id="error"></div>
         <b>Step I: Choose tenses</b><br/>
         <br>
-          <input type="checkbox" ng-model="tenses.Present" checked> Present
-          <input type="checkbox" ng-model="tenses.Imparfait" checked> Imparfait
-          <input type="checkbox" ng-model="tenses.PasseCompose" checked> Passé Composé
-          <input type="checkbox" ng-model="tenses.PasseSimple" checked> Passé Simple
-          <input type="checkbox" ng-model="tenses.PlusQueParfait" checked> Plus-que-parfait
-          <input type="checkbox" ng-model="tenses.FuturSimple" checked> Futur Simple
-          <input type="checkbox" ng-model="tenses.Subjonctif" checked>  Subjonctif <br/>
+          <input type="checkbox" ng-model="tenses.Present"> Present
+          <input type="checkbox" ng-model="tenses.Imparfait"> Imparfait
+          <input type="checkbox" ng-model="tenses.PasseCompose"> Passé Composé
+          <input type="checkbox" ng-model="tenses.PasseSimple"> Passé Simple
+          <input type="checkbox" ng-model="tenses.PlusQueParfait"> Plus-que-parfait
+          <input type="checkbox" ng-model="tenses.FuturSimple"> Futur Simple
+          <input type="checkbox" ng-model="tenses.Subjonctif">  Subjonctif <br/>
       </div>
       <br/>
       <div class="row step">
         <b>Step II: Choose groupes</b><br/>
         <br>
-        <input type="checkbox" ng-model="groups.1" checked> I
-        <input type="checkbox" ng-model="groups.2" checked> II
-        <input type="checkbox" ng-model="groups.3" checked> III <br/>
+        <input type="checkbox" ng-model="groups.1"> I
+        <input type="checkbox" ng-model="groups.2"> II
+        <input type="checkbox" ng-model="groups.3"> III <br/>
         <br/>
         <b>...or specifie verbs</b><br>
          <input type="text" ng-model="verbs" placeholder="être, aller, venir"> <br/>
@@ -28,11 +28,6 @@
       </div>
       <input type="submit" value="Try me!">
     </form>
-
-      <!-- {{t}} -->
-      <p ng-repeat="v in verbs_db">
-        {{v.id}}
-      </p>
   </div>
 
   <div class="row hidden" id="answer_form">
@@ -46,7 +41,22 @@
       <input type="text" ng-model="answer">
       <input type="submit" value="Check!">
     </form>
-    {{correct_ans.f}}
+    <div>
+      <h4>Your previous answers </h4>
+      <ul>
+        <li ng-repeat="ans in answers">
+          <b> {{ans.infinitive}} </b>({{ans.tense}}, {{ans.form}}) {{ans.user_ans}} {{ans.correct_ans}}
+          <span ng-switch on="ans.user_ans">
+              <span ng-switch-when="ans.correct_ans" class="green">
+                 {{ans.user_ans}}
+              </span>
+              <span ng-switch-default class="red">
+                  {{ans.user_ans}}
+              </span>
+          </span>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
 

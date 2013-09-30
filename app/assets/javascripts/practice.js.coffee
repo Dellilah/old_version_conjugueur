@@ -4,9 +4,8 @@ app.factory "Api", ["$resource", ($resource) ->
   V_i: $resource("/by_infinitive/:infinitive",
     infinitive: "@infinitive"
   )
-  V_g: $resource("/by_group/:group",
-    group: "@group",
-    isArray: true
+  V_g: $resource("/by_group/:group",{
+        group: "@group"}, { get:  {method:'GET', isArray:true}}
   )
   Ans: $resource("/check_form/:verb_id/:tense/:form.json",
     verb_id: "@verb_id"
@@ -23,6 +22,7 @@ app.factory "Api", ["$resource", ($resource) ->
 
   $scope.set = ->
     $scope.verbs_db = []
+    $scope.verbs_db2 = []
     $scope.tenses_chosen = []
     $scope.groups_chosen = []
     $scope.answers = []
@@ -31,30 +31,32 @@ app.factory "Api", ["$resource", ($resource) ->
         $scope.tenses_chosen.push(tense)
 
     if $scope.tenses_chosen.length > 0
-      for group in groups
-        if $scope.groups[group]
-          console.log
-          # a = Api.V_g.get({group: group})
 
-      # We're checking what verbs are we look for
-      if $scope.verbs
-        $scope.verbs_chosen = $scope.verbs.split ","
-        for verb in $scope.verbs_chosen
-          $scope.verbs_db.push(Api.V_i.get({infinitive: verb}))
+      for g in groups
+        if $scope.groups[g]
+          Api.V_g.get({group: g}, (success) ->
+            $scope.verbs_db2 = $scope.verbs_db
+            $scope.verbs_db = $scope.verbs_db2.concat(success)
+            if $scope.verbs
+              $scope.verbs_chosen = $scope.verbs.split ","
+              for verb in $scope.verbs_chosen
+                $scope.verbs_db.push(Api.V_i.get({infinitive: verb}))
+            if $scope.excluded_verbs
+              $scope.verbs_excluded = $scope.excluded_verbs.split ","
+              for verb in $scope.verbs_excluded
+                v = Api.V_i.get({infinitive: verb})
+                i = $scope.verbs_db.indexOf(v)
+                $scope.verbs_db.splice(i, 1)
 
-      if $scope.excluded_verbs
-        $scope.verbs_excluded = $scope.excluded_verbs.split ","
-        for verb in $scope.verbs_excluded
-          v = Api.V_i.get({infinitive: verb})
-          i = $scope.verbs_db.indexOf(v)
-          $scope.verbs_db.splice(i, 1)
+            if $scope.verbs_db.length > 0
+              $scope.draw()
+              answer = document.getElementById('answer_form')
+              answer.setAttribute 'class', 'row show'
+            else
+              addError('You have to choose verbs. ')
+          )
 
-      if $scope.verbs_db.length > 0
-        $scope.draw()
-        answer = document.getElementById('answer_form')
-        answer.setAttribute 'class', 'row show'
-      else
-        addError('You have to choose verbs. ')
+
     else
       addError('You have to specifie tenses. ')
 
@@ -71,4 +73,3 @@ app.factory "Api", ["$resource", ($resource) ->
       $scope.correct = success.f
       $scope.answers.push {infinitive: $scope.verb.infinitive, tense: $scope.tense, form: $scope.form, user_ans: $scope.answer, correct_ans: $scope.correct}
     )
-    console.log($scope.answers)
