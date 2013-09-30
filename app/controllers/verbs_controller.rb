@@ -27,6 +27,14 @@ class VerbsController < ApplicationController
     end
   end
 
+  def check_form
+    conj = Module.const_get(params['tense']).where(verb_id: params['verb_id']).take
+    @form = {f: conj.send(params['form'])}
+    respond_to do |format|
+      format.json {render json: @form}
+    end
+  end
+
   def new
     @verb = Verb.new
     @verb.present = Present.new

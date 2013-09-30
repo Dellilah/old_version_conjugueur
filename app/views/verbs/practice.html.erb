@@ -5,13 +5,13 @@
         <div id="error"></div>
         <b>Step I: Choose tenses</b><br/>
         <br>
-          <input type="checkbox" ng-model="tenses.present" checked> Present
-          <input type="checkbox" ng-model="tenses.imparfait" checked> Imparfait
-          <input type="checkbox" ng-model="tenses.passe_compose" checked> Passé Composé
-          <input type="checkbox" ng-model="tenses.passe_simple" checked> Passé Simple
-          <input type="checkbox" ng-model="tenses.plus_que_parfait" checked> Plus-que-parfait
-          <input type="checkbox" ng-model="tenses.futur_simple" checked> Futur Simple
-          <input type="checkbox" ng-model="tenses.subjonctif" checked>  Subjonctif <br/>
+          <input type="checkbox" ng-model="tenses.Present" checked> Present
+          <input type="checkbox" ng-model="tenses.Imparfait" checked> Imparfait
+          <input type="checkbox" ng-model="tenses.PasseCompose" checked> Passé Composé
+          <input type="checkbox" ng-model="tenses.PasseSimple" checked> Passé Simple
+          <input type="checkbox" ng-model="tenses.PlusQueParfait" checked> Plus-que-parfait
+          <input type="checkbox" ng-model="tenses.FuturSimple" checked> Futur Simple
+          <input type="checkbox" ng-model="tenses.Subjonctif" checked>  Subjonctif <br/>
       </div>
       <br/>
       <div class="row step">
@@ -27,6 +27,7 @@
          <input type="text" ng-model="excluded_verbs" placeholder="être, aller, venir"> <br/>
       </div>
       <input type="submit" value="Try me!">
+    </form>
 
       <!-- {{t}} -->
       <p ng-repeat="v in verbs_db">
@@ -34,8 +35,18 @@
       </p>
   </div>
 
-  <div class="row" id="answer_form">
-
+  <div class="row hidden" id="answer_form">
+    <div class="row"><h1>What is the form... </h1></div>
+    <ul>
+      <li>Verb: {{verb.infinitive}}</li>
+      <li>Tense: {{tense}}</li>
+      <li>Form: {{form}}</li>
+    </ul>
+    <form ng-submit="check()">
+      <input type="text" ng-model="answer">
+      <input type="submit" value="Check!">
+    </form>
+    {{correct_ans.f}}
   </div>
 </div>
 

@@ -12,6 +12,8 @@ Conjugeur::Application.routes.draw do
   get '/practice' => 'verbs#practice'
   get '/by_infinitive/:infinitive' => 'verbs#by_infinitive'
   get '/by_group/:group' => 'verbs#by_group'
+  get '/check_form/:verb_id/:tense/:form' => 'verbs#check_form'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
