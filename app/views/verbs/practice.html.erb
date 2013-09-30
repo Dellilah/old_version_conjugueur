@@ -38,22 +38,23 @@
       <li>Form: {{form}}</li>
     </ul>
     <form ng-submit="check()">
-      <input type="text" ng-model="answer">
+      <input type="text" ng-model="answer" id="input_answer">
       <input type="submit" value="Check!">
     </form>
     <div>
       <h4>Your previous answers </h4>
       <ul>
         <li ng-repeat="ans in answers">
-          <b> {{ans.infinitive}} </b>({{ans.tense}}, {{ans.form}}) {{ans.user_ans}} {{ans.correct_ans}}
-          <span ng-switch on="ans.user_ans">
-              <span ng-switch-when="ans.correct_ans" class="green">
+          <b> {{ans.infinitive}} </b>({{ans.tense}}, {{ans.form}}) <br/>
+            your answer: {{ans.user_ans}} <=> correct answer: {{ans.correct_ans}}
+          <!-- <span ng-switch="ans.correct_ans">
+              <span ng-switch-when="ans.user_ans" class="green">
                  {{ans.user_ans}}
               </span>
-              <span ng-switch-default class="red">
-                  {{ans.user_ans}}
+              <span ng-default class="red">
+                {{ans.user_ans}}
               </span>
-          </span>
+          </span> -->
         </li>
       </ul>
     </div>

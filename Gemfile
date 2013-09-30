@@ -62,5 +62,5 @@ gem 'zurb-foundation', '~> 4.0.0'
 gem "nokogiri", "~> 1.6.0"
 
 # Angular JS
-gem 'angularjs-rails'
+gem 'angularjs-rails', "~> 1.0.8"
 
